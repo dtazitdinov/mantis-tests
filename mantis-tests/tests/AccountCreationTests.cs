@@ -8,6 +8,13 @@ namespace mantis_tests
     [TestFixture]
     public class AccountCreationTests : TestBase
     {
+        [TestFixtureSetUp]
+        public void setUpConfig()
+        {
+            appManager.Ftp.BackupFile("");
+            appManager.Ftp.Upload("", null);
+        }
+
         [Test]
         public void TestAccountRegistration()
         {
@@ -18,6 +25,12 @@ namespace mantis_tests
                 Email = "testuser@localhost:8080.localdomain"
             };
             appManager.Registration.Register(account);
+        }
+
+        [TestFixtureTearDown]
+        public void RestoreConfig()
+        {
+            appManager.Ftp.RestoreBackupFile("");
         }
     }
 }

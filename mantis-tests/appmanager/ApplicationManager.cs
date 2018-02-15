@@ -16,6 +16,7 @@ namespace mantis_tests
         private StringBuilder verificationErrors;
 
         public RegistrationHelper Registration { get; }
+        public FtpHelper Ftp { get; }
 
         protected string baseURL;
 
@@ -31,7 +32,9 @@ namespace mantis_tests
             driver = new FirefoxDriver();
             baseURL = "http://localhost";
             verificationErrors = new StringBuilder();
+
             Registration = new RegistrationHelper(this);
+            Ftp = new FtpHelper(this);
 
         }
 
