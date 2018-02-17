@@ -2,6 +2,8 @@
 using System.Text;
 using System.Collections.Generic;
 using NUnit.Framework;
+using System.Net.FtpClient;
+using System.IO;
 
 namespace mantis_tests
 {
@@ -12,7 +14,10 @@ namespace mantis_tests
         public void setUpConfig()
         {
             appManager.Ftp.BackupFile("/config_inc.php");
-            appManager.Ftp.Upload("/config_inc.php", null);
+            using (Stream localFile = File.Open("config_inc.php", FileMode.Open))
+            {
+                appManager.Ftp.Upload("/config_inc.php", localFile);
+            }            
         }
 
         [Test]
