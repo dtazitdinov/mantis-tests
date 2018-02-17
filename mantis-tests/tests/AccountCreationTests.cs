@@ -11,8 +11,8 @@ namespace mantis_tests
         [TestFixtureSetUp]
         public void setUpConfig()
         {
-            appManager.Ftp.BackupFile("");
-            appManager.Ftp.Upload("", null);
+            appManager.Ftp.BackupFile("/config_inc.php");
+            appManager.Ftp.Upload("/config_inc.php", null);
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace mantis_tests
         [TestFixtureTearDown]
         public void RestoreConfig()
         {
-            appManager.Ftp.RestoreBackupFile("");
+            appManager.Ftp.RestoreBackupFile("/config_inc.php");
         }
     }
 }
