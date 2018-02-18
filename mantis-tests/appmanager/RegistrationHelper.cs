@@ -32,7 +32,7 @@ namespace mantis_tests
 
         private void FillRegistrationForm(AccountData account)
         {
-            Type(By.Id("username"), account.Name);
+            Type(By.Id("username"), account.Username);
             Type(By.Id("email-field"), account.Email);
         }
 

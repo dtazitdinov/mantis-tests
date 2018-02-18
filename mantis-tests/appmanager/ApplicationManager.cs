@@ -17,9 +17,12 @@ namespace mantis_tests
         public IWebDriver driver;
         private StringBuilder verificationErrors;
 
-        public RegistrationHelper Registration { get; }
-        public FtpHelper Ftp { get; }
-        public JamesHelper James { get; }
+        public RegistrationHelper Registration { get; set; }
+        public FtpHelper Ftp { get; set; }
+        public JamesHelper James { get; set; }
+        public ProjectManagementHelper ProjectManagement { get; set; }
+        public ManagementMenuHelper ManagementMenu { get; set; }
+        public LoginHelper Auth { get; set; }        
 
         protected string baseURL;
 
@@ -32,9 +35,6 @@ namespace mantis_tests
             //options.BrowserExecutableLocation = @"c:\Program Files (x86)\Mozilla Firefox ESR\firefox.exe";
             options.UseLegacyImplementation = true;
             driver = new FirefoxDriver(options);
-            //System.Environment.SetEnvironmentVariable("webdriver.gecko.driver", 
-                //@"G:\Desktop\Csharp_Training\mantis-tests\mantis-tests\bin\Debug/geckodriver.exe");
-            //System.setProperty("webdriver.gecko.driver", "C:\\geckodriver.exe");
             //driver = new FirefoxDriver();
             baseURL = "http://localhost";
             verificationErrors = new StringBuilder();
@@ -42,6 +42,9 @@ namespace mantis_tests
             Registration = new RegistrationHelper(this);
             Ftp = new FtpHelper(this);
             James = new JamesHelper(this);
+            ProjectManagement = new ProjectManagementHelper(this);
+            ManagementMenu = new ManagementMenuHelper(this);
+            Auth = new LoginHelper(this);
         }
 
         public static ApplicationManager GetThreadInstance()
