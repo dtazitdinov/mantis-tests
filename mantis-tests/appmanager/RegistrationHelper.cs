@@ -21,7 +21,8 @@ namespace mantis_tests
 
         private void OpenRegistrationForm()
         {
-            driver.FindElement(By.ClassName("toolbar center")).FindElement(By.TagName("a")).Click();
+            //driver.FindElement(By.ClassName("toolbar center")).FindElement(By.TagName("a")).Click();
+            driver.FindElement(By.XPath("//div[@class='toolbar center']/a")).Click();
         }
 
         private void SubmitRegistration()
@@ -37,7 +38,7 @@ namespace mantis_tests
 
         private void OpenMainPage()
         {
-            manager.driver.Url = @"http://localhost:8080/mantisbt-2.11.1/login_page.php";
+            manager.driver.Url = @"http://localhost/mantisbt-2.11.1/login_page.php";
         }
     }
 }

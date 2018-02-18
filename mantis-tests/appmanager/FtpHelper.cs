@@ -15,6 +15,7 @@ namespace mantis_tests
         public FtpHelper(ApplicationManager manager) : base(manager)
         {
             client = new FtpClient();
+            client.Host = "localhost";
             client.Credentials = new System.Net.NetworkCredential("mantis", "mantis");
             client.Connect();
         }
@@ -27,17 +28,40 @@ namespace mantis_tests
                 return;
             }
             client.Rename(path, backupPath);
-
         }
 
         public void RestoreBackupFile(String path)
         {
             String backupPath = path + ".bak";
+            if (!File.Exists(backupPath))
+            {
+                return;
+            }
+            if (File.Exists(path))
+            {
+                client.DeleteFile(path);               
+            }
+            client.Rename(backupPath, path);
+            
         }
 
         public void Upload(String path, Stream localFile)
         {
+            if (File.Exists(path))
+            {
+                client.DeleteFile(path);
+            }
 
+            using(Stream ftpStream = client.OpenWrite(path))
+            {
+                byte[] buffer = new byte[8 * 1024];
+                int count = localFile.Read(buffer, 0, buffer.Length);
+                while (count > 0)
+                {
+                    ftpStream.Write(buffer, 0, count);
+                    count = localFile.Read(buffer, 0, buffer.Length);
+                }
+            }
         }
     }
 }

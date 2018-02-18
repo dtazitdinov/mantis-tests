@@ -12,7 +12,7 @@ namespace mantis_tests
         public static bool PROTECTED_LONG_UI_CHECKS = true;
         protected ApplicationManager appManager;
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void SetupApplicationManager()
         {
             appManager = ApplicationManager.GetThreadInstance();
