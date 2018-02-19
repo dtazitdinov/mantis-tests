@@ -20,16 +20,16 @@ namespace mantis_tests
 
         public void GoToManageProjectPage()
         {
-            driver.Navigate().GoToUrl(baseURL + ":8080/mantisbt-2.11.1/manage_proj_page.php");
+            driver.Navigate().GoToUrl(baseURL + "/mantisbt-2.11.1/manage_proj_page.php");
         }
 
         public void GoToMyWiewPage()
         {
-            if (driver.Url == baseURL + ":8080/mantisbt-2.11.1/my_view_page.php")
+            if (driver.Url == baseURL + "/mantisbt-2.11.1/my_view_page.php")
             {
                 return;
             }
-            driver.Navigate().GoToUrl(baseURL + ":8080/mantisbt-2.11.1/my_view_page.php");
+            driver.Navigate().GoToUrl(baseURL + ":/mantisbt-2.11.1/my_view_page.php");
         }
     }
 }

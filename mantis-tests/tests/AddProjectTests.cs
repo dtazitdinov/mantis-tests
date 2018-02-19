@@ -16,9 +16,9 @@ namespace mantis_tests
             ProjectData project = new ProjectData()
             {
                 Name = "Project_" + GenerateRandomNumber(1000),
-                Status = "development",
+                Status = "10",
                 InheritGlobalCategories = true,
-                ViewStatus = "public",
+                ViewStatus = "10",
                 Discription = "Discription"
             };
 

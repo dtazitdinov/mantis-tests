@@ -23,7 +23,7 @@ namespace mantis_tests
             SubmitProjectCreation();
         }
 
-        internal void Remove(string name)
+        public void Remove(string name)
         {
             manager.ManagementMenu.GoToManageProjectPage();
             Open(name);
@@ -31,9 +31,11 @@ namespace mantis_tests
             ConfirmDelete();
         }
 
-        internal void CheckProjectPresent()
+        public void CheckProjectPresent()
         {
-            if (IsElementPresent(driver.FindElements(By.CssSelector("div.table-responsive"))[1], By.XPath("//tbody/tr[1]")))
+            manager.ManagementMenu.GoToManageProjectPage();
+
+            if (IsElementPresent(driver.FindElements(By.TagName("tbody"))[0], By.XPath("tr[1]")))
             {
                 return;
             }
@@ -41,51 +43,53 @@ namespace mantis_tests
             ProjectData project = new ProjectData()
             {
                 Name = "Project_" + TestBase.GenerateRandomNumber(1000),
-                Status = "development",
+                Status = "10",
                 InheritGlobalCategories = true,
-                ViewStatus = "public",
+                ViewStatus = "10",
                 Discription = "Discription"
             };
 
             Create(project);
         }
 
-        private void Open(string name)
+        public void Open(string name)
         {
             driver.FindElement(By.XPath($"//div[@class = 'table-responsive'][1]//tbody//a[.='{name}']")).Click();
         }
 
         public void InitProjectCreation()
         {
-            driver.FindElement(By.XPath("//button[.='Create New Project']")).Click();
+            //driver.FindElement(By.XPath("//button[.='Create New Project']")).Click();
+            driver.FindElement(By.XPath("//form[@action='manage_proj_create_page.php']")).Click();
         }
 
-        private void SubmitProjectCreation()
+        public void SubmitProjectCreation()
         {
-            driver.FindElement(By.XPath("//input[@value='Add Project']")).Click();
+            driver.FindElement(By.CssSelector("input.btn-primary")).Click();
         }
 
-        private void InitDelete()
+        public void InitDelete()
         {
             driver.FindElement(By.Id("project-delete-form")).Click();
         }
 
-        private void ConfirmDelete()
+        public void ConfirmDelete()
         {
             driver.FindElement(By.XPath("//input[@type='submit']")).Click();
         }
 
-        private void FillForm(ProjectData project)
+        public void FillForm(ProjectData project)
         {
             Type(By.Id("project-name"), project.Name);
-            driver.FindElement(By.XPath($"//select[@id = 'project-status']/option[.='{project.Status}']")).Click();
+            driver.FindElement(By.XPath($"//select[@id = 'project-status']/option[@value = '{project.Status}']")).Click();
 
             if (!project.InheritGlobalCategories)
             {
-                driver.FindElement(By.Id("project-inherit-global")).Click();
+                driver.FindElement(By.Id("project-inherit-global")).Click();     
+                
             }
 
-            driver.FindElement(By.XPath($"//select[@id = 'project-view-state']/option[.='{project.ViewStatus}']")).Click();
+            driver.FindElement(By.XPath($"//select[@id = 'project-view-state']/option[@value = '{project.ViewStatus}']")).Click();
             Type(By.Id("project-description"), project.Discription);
         }
 
@@ -94,9 +98,7 @@ namespace mantis_tests
             manager.ManagementMenu.GoToManageProjectPage();
             List<ProjectData> list = new List<ProjectData>();
 
-            ICollection<IWebElement> elements = driver
-                .FindElements(By.CssSelector("div.table-responsive"))[1]
-                .FindElements(By.XPath("//tbody/tr"));
+            ICollection<IWebElement> elements = driver.FindElements(By.TagName("tbody"))[0].FindElements(By.TagName("tr"));
 
             foreach (IWebElement element in elements)
             {
@@ -104,11 +106,11 @@ namespace mantis_tests
 
                 list.Add(new ProjectData()
                 {
-                    Name = columns.ElementAt(1).FindElement(By.TagName("a")).Text,
-                    Status = columns.ElementAt(2).Text,
-                    Enabled = IsElementPresent(columns.ElementAt(3), By.TagName("i")),
-                    ViewStatus = columns.ElementAt(4).Text,
-                    Discription = columns.ElementAt(5).Text
+                    Name = columns.ElementAt(0).FindElement(By.TagName("a")).Text,
+                    Status = columns.ElementAt(1).Text,
+                    Enabled = IsElementPresent(columns.ElementAt(2), By.TagName("i")),
+                    ViewStatus = columns.ElementAt(3).Text,
+                    Discription = columns.ElementAt(4).Text
                 });
             }
             return list;
