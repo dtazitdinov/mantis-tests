@@ -23,11 +23,8 @@ namespace mantis_tests
                 }
                 Logout();
             }
-            Type(By.Name("username"), account.Username);
-            driver.FindElement(By.XPath("//input[@type='submit']")).Click();
-
-            Type(By.Name("password"), account.Password);
-            driver.FindElement(By.XPath("//input[@type='submit']")).Click();
+            EnterUsername(account.Username);
+            EnterPassword(account.Password);
         }
 
         public bool LoggedIn()
@@ -53,6 +50,18 @@ namespace mantis_tests
                 driver.FindElement(By.CssSelector("span.user-info")).Click();
                 driver.FindElement(By.CssSelector("i.fa-sign-out")).Click();
             }
+        }
+
+        public void EnterUsername(string username)
+        {
+            Type(By.Name("username"), username);
+            driver.FindElement(By.XPath("//input[@type='submit']")).Click();
+        }
+
+        public void EnterPassword(string password)
+        {
+            Type(By.Name("password"), password);
+            driver.FindElement(By.XPath("//input[@type='submit']")).Click();
         }
     }
 }

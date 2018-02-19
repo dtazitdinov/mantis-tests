@@ -41,5 +41,18 @@ namespace mantis_tests
                 return false;
             }
         }
+
+        public bool IsElementPresent(IWebElement element, By by)
+        {
+            try
+            {
+                element.FindElement(by);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
     }
 }

@@ -8,16 +8,21 @@ namespace mantis_tests
 {
     public class ProjectData
     {
-        public ProjectData(string projectName)
+        public ProjectData()
         {
-            ProjectName = projectName;
         }
 
-        public string ProjectName { get; set; }
-        public string Visibility { get; set; }
+        public ProjectData(string name)
+        {
+            Name = name;
+        }
+
+        public string Name { get; set; }
+        public string ViewStatus { get; set; }
         public string Status { get; set; }
         public bool InheritGlobalCategories { get; set; }
         public string Discription { get; set; }
+        public bool Enabled { get; set; }
 
         public int CompareTo(ProjectData other)
         {
@@ -25,7 +30,7 @@ namespace mantis_tests
             {
                 return 1;
             }
-            return ProjectName.CompareTo(other.ProjectName);
+            return Name.CompareTo(other.Name);
         }
 
         public bool Equals(ProjectData other)
@@ -40,17 +45,17 @@ namespace mantis_tests
                 return true;
             }
 
-            return ProjectName == other.ProjectName;
+            return Name == other.Name;
         }
 
         public override int GetHashCode()
         {
-            return ProjectName.GetHashCode();
+            return Name.GetHashCode();
         }
 
         public override string ToString()
         {
-            return $"ProjectName = {ProjectName}";
+            return $"ProjectName = {Name}";
         }
     }
 }

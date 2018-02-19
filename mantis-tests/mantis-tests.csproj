@@ -68,6 +68,8 @@
     <Compile Include="tests\AccountCreationTests.cs" />
     <Compile Include="model\AccountData.cs" />
     <Compile Include="tests\AddProjectTests.cs" />
+    <Compile Include="tests\AuthTestBase.cs" />
+    <Compile Include="tests\RemovalProjectTests.cs" />
     <Compile Include="tests\TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

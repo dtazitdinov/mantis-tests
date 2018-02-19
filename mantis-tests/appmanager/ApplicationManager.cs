@@ -43,7 +43,7 @@ namespace mantis_tests
             Ftp = new FtpHelper(this);
             James = new JamesHelper(this);
             ProjectManagement = new ProjectManagementHelper(this);
-            ManagementMenu = new ManagementMenuHelper(this);
+            ManagementMenu = new ManagementMenuHelper(this, baseURL);
             Auth = new LoginHelper(this);
         }
 
