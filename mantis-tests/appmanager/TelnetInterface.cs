@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net.Sockets;
 
-namespace mantis_tests
+namespace MinimalisticTelnet
 {
     enum Verbs {
         WILL = 251,
