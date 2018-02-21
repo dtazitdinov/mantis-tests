@@ -9,7 +9,12 @@ namespace mantis_tests
 {
     public class RegistrationHelper : HelperBase
     {
-        public RegistrationHelper(ApplicationManager manager) : base(manager) { }
+        private string baseUrl;
+
+        public RegistrationHelper(ApplicationManager manager, string baseUrl) : base(manager)
+        {
+            this.baseUrl = baseUrl;
+        }
 
         internal void Register(AccountData account)
         {
@@ -38,7 +43,7 @@ namespace mantis_tests
 
         private void OpenMainPage()
         {
-            manager.driver.Url = @"http://localhost/mantisbt-2.11.1/login_page.php";
+            manager.driver.Url = baseUrl + "/login_page.php";
         }
     }
 }
