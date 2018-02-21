@@ -22,7 +22,8 @@ namespace mantis_tests
         public JamesHelper James { get; set; }
         public ProjectManagementHelper ProjectManagement { get; set; }
         public ManagementMenuHelper ManagementMenu { get; set; }
-        public LoginHelper Auth { get; set; }        
+        public LoginHelper Auth { get; set; }      
+        public ApiHelper API { get; set; }
 
         protected string baseURL;
 
@@ -31,20 +32,20 @@ namespace mantis_tests
         private ApplicationManager()
         {
             FirefoxOptions options = new FirefoxOptions();
-            options.BrowserExecutableLocation = @"c:\Program Files\Mozilla Firefox\firefox.exe";
-            //options.BrowserExecutableLocation = @"c:\Program Files (x86)\Mozilla Firefox ESR\firefox.exe";
+            //options.BrowserExecutableLocation = @"c:\Program Files\Mozilla Firefox\firefox.exe";
+            options.BrowserExecutableLocation = @"c:\Program Files (x86)\Mozilla Firefox ESR\firefox.exe";
             options.UseLegacyImplementation = true;
             driver = new FirefoxDriver(options);
-            //driver = new FirefoxDriver();
-            baseURL = "http://localhost";
+            baseURL = "http://localhost/mantisbt-2.11.1";
             verificationErrors = new StringBuilder();
 
-            Registration = new RegistrationHelper(this);
+            Registration = new RegistrationHelper(this, baseURL);
             Ftp = new FtpHelper(this);
             James = new JamesHelper(this);
-            ProjectManagement = new ProjectManagementHelper(this);
+            ProjectManagement = new ProjectManagementHelper(this, baseURL);
             ManagementMenu = new ManagementMenuHelper(this, baseURL);
             Auth = new LoginHelper(this);
+            API = new ApiHelper(this);
         }
 
         public static ApplicationManager GetThreadInstance()

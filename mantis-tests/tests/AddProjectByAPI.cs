@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace mantis_tests
-{
+{   
     [TestFixture]
-    public class AddProjectTests : AuthTestBase
+    public class AddProjectByAPI : TestBase
     {
         [Test]
-        public void AddProjectTest()
+        public void AddProjectTestAPI()
         {
+            AccountData account = new AccountData()
+            {
+                Username = "administrator",
+                Password = "password"
+            };
+
             ProjectData project = new ProjectData()
             {
                 Name = "Project_" + GenerateRandomNumber(1000),
@@ -22,11 +28,11 @@ namespace mantis_tests
                 Description = "Discription"
             };
 
-            List<ProjectData> oldProjects = appManager.ProjectManagement.GetProjectList();
+            List<ProjectData> oldProjects = appManager.API.GetProjectList(account);
 
-            appManager.ProjectManagement.Create(project);
+            appManager.API.CreateNewProject(account, project);
 
-            List<ProjectData> newProjects = appManager.ProjectManagement.GetProjectList();
+            List<ProjectData> newProjects = appManager.API.GetProjectList(account);
 
             oldProjects.Add(project);
             oldProjects.Sort();

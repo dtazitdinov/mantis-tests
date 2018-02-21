@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using SimpleBrowser;
+using SimpleBrowser.WebDriver;
+using System.Text.RegularExpressions;
 
 namespace mantis_tests
 {
     public class ProjectManagementHelper : HelperBase
     {
-        public ProjectManagementHelper(ApplicationManager manager) : base(manager)
+        private string baseUrl;
+
+        public ProjectManagementHelper(ApplicationManager manager, string baseUrl) : base(manager)
         {
+            this.baseUrl = baseUrl;
         }
 
         public void Create(ProjectData project)
@@ -46,7 +52,7 @@ namespace mantis_tests
                 Status = "10",
                 InheritGlobalCategories = true,
                 ViewStatus = "10",
-                Discription = "Discription"
+                Description = "Discription"
             };
 
             Create(project);
@@ -90,7 +96,7 @@ namespace mantis_tests
             }
 
             driver.FindElement(By.XPath($"//select[@id = 'project-view-state']/option[@value = '{project.ViewStatus}']")).Click();
-            Type(By.Id("project-description"), project.Discription);
+            Type(By.Id("project-description"), project.Description);
         }
 
         public List<ProjectData> GetProjectList()
@@ -110,10 +116,52 @@ namespace mantis_tests
                     Status = columns.ElementAt(1).Text,
                     Enabled = IsElementPresent(columns.ElementAt(2), By.TagName("i")),
                     ViewStatus = columns.ElementAt(3).Text,
-                    Discription = columns.ElementAt(4).Text
+                    Description = columns.ElementAt(4).Text
                 });
             }
             return list;
+        }
+
+        public List<ProjectData> GetProjectListBySB()
+        {
+            IWebDriver driver = OpenAppAndLogin();
+            driver.Url = baseUrl + "/manage_proj_page.php";
+
+            List<ProjectData> list = new List<ProjectData>();
+
+            IList<IWebElement> elements = driver.FindElements(By.TagName("tbody"))[0].FindElements(By.TagName("tr"));
+            foreach (IWebElement element in elements)
+            {
+                IWebElement link = element.FindElement(By.TagName("a"));
+                list.Add(new ProjectData()
+                {
+                    Id = Regex.Match(link.GetAttribute("href"), @"\d+$").Value,                 
+                    Name = link.Text
+                });
+            }
+            return list;
+        }
+
+        public void DeleteBySB(string Id)
+        {
+            IWebDriver driver = OpenAppAndLogin();
+            driver.Url = baseUrl + "/manage_proj_edit_page.php?project_id=" + Id;
+            driver.FindElement(By.Id("project-delete-form")).Click();
+            driver.FindElement(By.XPath("//input[@type='submit']")).Click();
+        }
+
+        private IWebDriver OpenAppAndLogin()
+        {
+            IWebDriver driver = new SimpleBrowserDriver();
+            driver.Url = baseUrl + "/login_page.php";
+
+            driver.FindElement(By.XPath("//input[@type='submit']")).SendKeys("administrator");
+            driver.FindElement(By.XPath("//input[@type='submit']")).Click();
+
+            driver.FindElement(By.Name("password")).SendKeys("password");
+            driver.FindElement(By.XPath("//input[@type='submit']")).Click();
+
+            return driver;
         }
     }
 }

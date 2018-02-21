@@ -17,11 +17,12 @@ namespace mantis_tests
             Name = name;
         }
 
+        public string Id { get; set; }
         public string Name { get; set; }
         public string ViewStatus { get; set; }
         public string Status { get; set; }
         public bool InheritGlobalCategories { get; set; }
-        public string Discription { get; set; }
+        public string Description { get; set; }
         public bool Enabled { get; set; }
 
         public int CompareTo(ProjectData other)
