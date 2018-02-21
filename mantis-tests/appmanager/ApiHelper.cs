@@ -30,12 +30,12 @@ namespace mantis_tests
             client.mc_project_add(account.Username, account.Password, project);
         }
 
-        internal void DeleteProject(AccountData account, string id)
+        public void DeleteProject(AccountData account, string id)
         {
             client.mc_project_delete(account.Username, account.Password, id);
         }
 
-        internal void CheckProjectPresent(AccountData account)
+        public void CheckProjectPresent(AccountData account)
         {
             if(GetProjectList(account).Count == 0)
             {
@@ -73,8 +73,5 @@ namespace mantis_tests
             }
             return list;
         }
-
-
-
     }
 }

@@ -121,47 +121,5 @@ namespace mantis_tests
             }
             return list;
         }
-
-        public List<ProjectData> GetProjectListBySB()
-        {
-            IWebDriver driver = OpenAppAndLogin();
-            driver.Url = baseUrl + "/manage_proj_page.php";
-
-            List<ProjectData> list = new List<ProjectData>();
-
-            IList<IWebElement> elements = driver.FindElements(By.TagName("tbody"))[0].FindElements(By.TagName("tr"));
-            foreach (IWebElement element in elements)
-            {
-                IWebElement link = element.FindElement(By.TagName("a"));
-                list.Add(new ProjectData()
-                {
-                    Id = Regex.Match(link.GetAttribute("href"), @"\d+$").Value,                 
-                    Name = link.Text
-                });
-            }
-            return list;
-        }
-
-        public void DeleteBySB(string Id)
-        {
-            IWebDriver driver = OpenAppAndLogin();
-            driver.Url = baseUrl + "/manage_proj_edit_page.php?project_id=" + Id;
-            driver.FindElement(By.Id("project-delete-form")).Click();
-            driver.FindElement(By.XPath("//input[@type='submit']")).Click();
-        }
-
-        private IWebDriver OpenAppAndLogin()
-        {
-            IWebDriver driver = new SimpleBrowserDriver();
-            driver.Url = baseUrl + "/login_page.php";
-
-            driver.FindElement(By.XPath("//input[@type='submit']")).SendKeys("administrator");
-            driver.FindElement(By.XPath("//input[@type='submit']")).Click();
-
-            driver.FindElement(By.Name("password")).SendKeys("password");
-            driver.FindElement(By.XPath("//input[@type='submit']")).Click();
-
-            return driver;
-        }
     }
 }

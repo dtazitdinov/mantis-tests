@@ -95,7 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Connected Services\Mantis_API\mantisconnect.wsdl" />
+    <None Include="Connected Services\Mantis_API\mantisconnect1.wsdl" />
     <None Include="Connected Services\Mantis_API\mantis_tests.Mantis_API.AccountData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
